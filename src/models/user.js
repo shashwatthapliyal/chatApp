@@ -1,5 +1,9 @@
 const mongoose = require('mongoose');
 const validator = require('validator');
+const jwt = require('jsonwebtoken');
+const bcrypt = require('bcrypt');
+
+
 
 const userSchema = new mongoose.Schema({
     firstName: {
@@ -54,4 +58,23 @@ const userSchema = new mongoose.Schema({
 
 // const UserModel = mongoose.model("user", userSchema);
 
-module.exports = mongoose.model("user", userSchema);;
+// Mongoose Schema Method
+userSchema.methods.getJWT = function () {
+    const token = jwt.sign({ _id: this._id }, "secretKey", {
+        expiresIn: "7d",
+    })
+    return token;
+}
+// Mongoose Schema Method
+userSchema.methods.validatePassword = async function (passwordInputByUser) {
+    const isPasswordValid = await bcrypt.compare(passwordInputByUser, this.password);
+
+    return isPasswordValid;
+}
+
+userSchema.methods.encryptPassword = async function (passwordInputByUser) {
+    const encryptedPassword = await bcrypt.hash(passwordInputByUser, 10);
+    return encryptedPassword;
+}
+
+module.exports = mongoose.model("user", userSchema);
