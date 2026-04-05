@@ -61,7 +61,7 @@ const userSchema = new mongoose.Schema({
 // Mongoose Schema Method
 userSchema.methods.getJWT = function () {
     const token = jwt.sign({ _id: this._id }, "secretKey", {
-        expiresIn: "7d",
+        expiresIn: "1h",
     })
     return token;
 }
@@ -77,4 +77,4 @@ userSchema.methods.encryptPassword = async function (passwordInputByUser) {
     return encryptedPassword;
 }
 
-module.exports = mongoose.model("user", userSchema);
+module.exports = mongoose.model("User", userSchema);
