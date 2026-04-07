@@ -4,7 +4,7 @@ const requestRouter = express.Router();
 const userAuth = require('../middleware/auth');
 const ConnectionRequest = require('../models/connectionRequest.js');
 const User = require('../models/user.js');
-const { message } = require('prompt');
+
 
 // for status : interested and ignored
 requestRouter.post("/request/send/:status/:toUserId", userAuth, async (req, res) => {
