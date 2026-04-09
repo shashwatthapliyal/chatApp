@@ -1,4 +1,5 @@
 const express = require('express');
+const http = require('http');
 const connectDB = require("./config/database.js")
 const cookieParser = require('cookie-parser');
 const cors = require('cors');
@@ -24,10 +25,12 @@ app.use("/", profileRouter)
 app.use("/", userRouter)
 
 
+const server=http.createServer(app)
+
 
 connectDB()
     .then(() => {
-        app.listen(3000, () => console.log("listening....."));
+        server.listen(3000, () => console.log("listening....."));
         console.log("DB connection established")
 
     })
