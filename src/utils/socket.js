@@ -2,9 +2,8 @@
 const { Server } = require('socket.io');
 const jwt = require('jsonwebtoken');
 const chat = require('../models/chat');
-
 const Chat = require('../models/chat');
-const { message } = require('prompt');
+
 const initializeSocket = (server) => {
     // console.log("initialized")
 
