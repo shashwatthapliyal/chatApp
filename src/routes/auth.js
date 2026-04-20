@@ -7,13 +7,16 @@ const { validateSignUpData } = require('../utils/validation');
 const User = require('../models/user')
 
 authRouter.post("/signup", async (req, res) => {
-    // console.log(req.body);
+    console.log(req.body);
     try {
         // Validation of data........
         validateSignUpData(req);
 
         // Encrypt the password.......
         const { firstName, lastName, emailId, age, password } = req.body;
+
+
+
         const passwordHash = await bcrypt.hash(password, 10)
         // console.log(passwordHash, password);
 
@@ -35,7 +38,7 @@ authRouter.post("/signup", async (req, res) => {
 
     }
     catch (err) {
-        res.status(400).send("error saving the user :  " + err.message);
+        res.status(400).json({ message: err.message });
     }
 })
 

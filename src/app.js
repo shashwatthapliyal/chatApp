@@ -1,5 +1,5 @@
-const express = require('express');
 const http = require('http');
+const express = require('express');
 const connectDB = require("./config/database.js")
 const cookieParser = require('cookie-parser');
 const cors = require('cors');
@@ -8,6 +8,8 @@ const authRouter = require('./routes/auth.js');
 const requestRouter = require('./routes/request.js');
 const profileRouter = require('./routes/profile.js');
 const userRouter = require('./routes/user.js');
+const chatRouter = require('./routes/chat.js')
+const initializeSocket = require('./utils/socket.js');
 
 const app = express();
 
@@ -23,9 +25,10 @@ app.use("/", authRouter)
 app.use("/", requestRouter)
 app.use("/", profileRouter)
 app.use("/", userRouter)
+app.use("/", chatRouter)
 
-
-const server=http.createServer(app)
+const server = http.createServer(app);
+initializeSocket(server);
 
 
 connectDB()
